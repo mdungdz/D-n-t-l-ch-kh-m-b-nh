@@ -1,0 +1,12 @@
+/* Chỉ nên giữ lại những thứ như thế này */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f4f7f9; /* Màu nền xám nhạt cho toàn trang chủ */
+  font-family: 'Inter', sans-serif;
+}
+
+.homepage-wrapper {
+  width: 100%;
+  overflow-x: hidden;
+}
