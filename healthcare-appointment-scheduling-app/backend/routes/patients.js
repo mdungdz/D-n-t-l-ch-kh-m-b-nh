@@ -2,7 +2,8 @@ const router = require('express').Router();
 const Patient = require('../models/patient.model');
 const appointmentImport = require('../models/appointment.model');
 const jwt = require('jsonwebtoken');
-const stripe = require("stripe")("sk_test_51IabQNSCj4BydkZ38AsoDragCM19yaMzGyBVng5KUZnCNrxCJuj308HmdAvoRcUEe2PEdoORMosOaRz1Wl8UX0Gt00FCuSwYpz")
+// Thay dòng 5 cũ bằng dòng này:
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const { v4: uuidv4 } = require('uuid');
 const { Appointment } = appointmentImport;
 
