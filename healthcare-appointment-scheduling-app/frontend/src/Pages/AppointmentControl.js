@@ -44,7 +44,7 @@ const AppointmentControl = () => {
     <div className="card border-0 shadow-sm p-4" style={{ borderRadius: "20px", backgroundColor: "#fff" }}>
       <div className="mb-4">
         <h5 className="font-weight-bold mb-0">LỊCH HẸN KHÁM BỆNH (TỔNG HỢP)</h5>
-        <small className="text-muted">Dữ liệu thực tế từ hệ thống Database</small>
+        <small className="text-muted">Dữ liệu thực tế tổng hợp từ hệ thống</small>
       </div>
 
       <div className="table-responsive">

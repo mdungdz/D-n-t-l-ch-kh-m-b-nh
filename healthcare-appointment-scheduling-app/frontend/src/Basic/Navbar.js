@@ -35,10 +35,7 @@ const Navbar = () => {
     history.push("/");
   }
 
-  // BIẾN KIỂM TRA ĐỂ TỰ ĐỘNG DÃN KỊCH BIÊN KHI VÀO DASHBOARD
-  const isDashboard = history.location.pathname
-    .toLowerCase()
-    .includes("dashboard");
+
 
   return (
     <>

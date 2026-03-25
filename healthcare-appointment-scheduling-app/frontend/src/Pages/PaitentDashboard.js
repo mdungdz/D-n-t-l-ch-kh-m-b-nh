@@ -26,7 +26,7 @@ const PaitentDashboard = () => {
   });
 
   const fileInputRef = useRef(null);
-  const [appointmentCount, setAppointmentCount] = useState(0);
+  const [appointmentCount] = useState(0);
   const { googleId } = useContext(AuthContext);
 
   // 2. Đồng bộ tempInfo khi patient thay đổi (để khi load từ local xong tempInfo cũng có dữ liệu luôn)

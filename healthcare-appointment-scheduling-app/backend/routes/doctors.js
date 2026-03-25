@@ -75,7 +75,6 @@ router.route("/get-slots").post(async (req, res) => {
 
 // 4. Đặt lịch hẹn (Book Slot)
 router.route("/book-slot").post((req, res) => {
-    // Thêm bookedBy từ req.body gửi lên
     const { googleId, patientName, doctorId, slotId, dateId, bookedBy } = req.body;
 
     Doctor.findOne({ _id: doctorId }).then((doctor) => {
@@ -93,7 +92,7 @@ router.route("/book-slot").post((req, res) => {
                 slotTime: slot.time,
                 doctorName: doctor.name,
                 patientName: patientName,
-                bookedBy: bookedBy, // LƯU Tên đăng nhập hoặc Email người đang ngồi đặt
+                bookedBy: bookedBy,
                 status: 'pending'
             });
 
@@ -104,7 +103,7 @@ router.route("/book-slot").post((req, res) => {
     });
 });
 
-// 5. Lấy lịch hẹn HÔM NAY (Chỉ lấy ca chưa hoàn thành)
+// 5. Lấy lịch hẹn HÔM NAY (Chỉnh status để lọc chuẩn)
 router.route('/todays-appointments').post(async (req, res) => {
     try {
         const { doctorId } = req.body;
@@ -112,12 +111,9 @@ router.route('/todays-appointments').post(async (req, res) => {
         const currDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`; 
 
         const appointments = await Appointment.find({
-            $or: [
-                { doctorId: doctorId },
-                { doctorId: doctorId?.toString() }
-            ],
+            doctorId: doctorId,
             date: currDate,
-            status: { $ne: 'Finished' } // Không lấy ca đã khám xong
+            status: { $nin: ['FINISHED', 'Finished'] } 
         });
 
         const sorted = appointments.sort((a, b) => (a.slotTime || "").localeCompare(b.slotTime || ""));
@@ -127,32 +123,77 @@ router.route('/todays-appointments').post(async (req, res) => {
     }
 });
 
-// 6. Xử lý khi bấm nút KHÁM xong (Hoàn thành)
+// 6. Lưu phiếu khám bệnh chi tiết (Đã sửa medicalRecord -> medicalDetails)
+router.post("/save-medical-record", async (req, res) => {
+  try {
+    const { 
+      appointmentId, 
+      symptoms, 
+      history, 
+      tests, 
+      diagnosis, 
+      prescription, 
+      advice,
+      gender,
+      dob,
+      hometown 
+    } = req.body;
+
+    const updatedApp = await Appointment.findByIdAndUpdate(
+      appointmentId,
+      {
+        $set: {
+          // KHỚP VỚI MODEL: medicalDetails
+          medicalDetails: {
+            symptoms,
+            history,
+            tests,
+            diagnosis,
+            prescription,
+            advice,
+            gender,
+            dob,
+            hometown,
+          },
+          status: "FINISHED", // Đồng bộ để Dashboard tính tiền
+          finishDate: new Date().toISOString().split('T')[0]
+        }
+      },
+      { new: true }
+    );
+
+    if (!updatedApp) {
+      return res.status(404).json({ success: false, message: "Không tìm thấy ca khám!" });
+    }
+
+    res.json({ success: true, message: "Lưu phiếu khám thành công!", data: updatedApp });
+  } catch (error) {
+    console.error("Lỗi Backend:", error);
+    res.status(500).json({ success: false, message: "Lỗi hệ thống khi lưu phiếu!" });
+  }
+});
+
+// 7. Xử lý khi bấm nút KHÁM xong
 router.post('/finish-appointment', async (req, res) => {
     try {
         const { appointmentId } = req.body;
-        
         await Appointment.findByIdAndUpdate(
             appointmentId, 
-            { status: 'Finished' }
+            { status: 'FINISHED' }
         );
-
         res.json({ success: true, message: "Đã chuyển vào lịch sử khám!" });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
 
-// 7. Lấy lịch sử tất cả ca đã khám
+// 8. Lấy lịch sử tất cả ca đã khám
 router.route('/appointment-history').post(async (req, res) => {
     try {
         const { doctorId } = req.body;
         const history = await Appointment.find({
-            $or: [
-                { doctorId: doctorId },
-                { doctorId: doctorId?.toString() }
-            ],
-            status: 'Finished'
+            doctorId: doctorId,
+            status: { $in: ['FINISHED', 'Finished'] }
         }).sort({ date: -1, slotTime: -1 });
 
         res.status(200).json(history);
@@ -161,17 +202,15 @@ router.route('/appointment-history').post(async (req, res) => {
     }
 });
 
-// 8. Lấy lịch sử khám của riêng 1 bệnh nhân
+// 9. Lấy lịch sử khám của riêng 1 bệnh nhân
 router.route('/patient-history').post(async (req, res) => {
     try {
-        const { bookedBy } = req.body; // Nhận định danh từ Frontend gửi lên
-        
-        // Nếu không gửi thông tin định danh, trả về mảng rỗng ngay lập tức
+        const { bookedBy } = req.body; 
         if (!bookedBy) return res.json([]);
 
         const history = await Appointment.find({
-            bookedBy: bookedBy, // CHÌA KHÓA BẢO MẬT: Chỉ lấy ca của mình
-            status: 'Finished'
+            bookedBy: bookedBy,
+            status: { $in: ['FINISHED', 'Finished'] }
         }).sort({ date: -1 });
         
         res.status(200).json(history);
@@ -179,7 +218,8 @@ router.route('/patient-history').post(async (req, res) => {
         res.status(400).json(err);
     }
 });
-// API lấy lịch đang chờ (Appointment Status) - Chỉ cho chính chủ
+
+// 10. API lấy lịch đang chờ
 router.route('/patient-status').post(async (req, res) => {
     try {
         const { bookedBy } = req.body;
@@ -187,7 +227,7 @@ router.route('/patient-status').post(async (req, res) => {
 
         const status = await Appointment.find({
             bookedBy: bookedBy,
-            status: { $ne: 'Finished' } // Lấy những ca chưa khám xong
+            status: { $nin: ['FINISHED', 'Finished'] }
         }).sort({ date: 1 });
 
         res.status(200).json(status);
@@ -195,17 +235,29 @@ router.route('/patient-status').post(async (req, res) => {
         res.status(400).json(err);
     }
 });
-// 9. API gửi Đánh giá & Phản hồi
+
+// 11. API gửi Đánh giá & Phản hồi (Khớp 100% với MongoDB Compass của ông)
 router.post('/submit-feedback', async (req, res) => {
     try {
-        const { appointmentId, rating, feedbackContent } = req.body;
+        const { appointmentId, stars, title, review } = req.body;
+        
         await Appointment.findByIdAndUpdate(
             appointmentId, 
-            { rating: rating, feedbackContent: feedbackContent }
+            { 
+                $set: {
+                    "feedback.stars": Number(stars), // Lưu vào trường stars như trong ảnh
+                    "feedback.title": title,         // Lưu vào trường title như trong ảnh
+                    "feedback.review": review,       // Lưu vào trường review như trong ảnh
+                    "feedback.given": true,
+                    "feedback.updatedAt": new Date()
+                }
+            }
         );
-        res.json({ success: true, message: "Cảm ơn bạn đã đánh giá!" });
+        
+        res.json({ success: true, message: "Cảm ơn ông, đánh giá đã được lưu!" });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error("Lỗi feedback:", err);
+        res.status(500).json({ error: "Không lưu được đánh giá rồi bác ơi" });
     }
 });
 

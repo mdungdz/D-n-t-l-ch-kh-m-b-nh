@@ -38,17 +38,14 @@ const Payment = (props) => {
         const appointmentData = location.state?.appointment;
 
         if (appointmentData) {
-            // Chốt dữ liệu từ state truyền sang
             setLastBooking({
                 ...appointmentData,
-                // Ưu tiên các trường dữ liệu từ MongoDB (_id, fee, amount)
                 id: appointmentData._id || appointmentData.id,
                 doctorFees: appointmentData.doctorFees || appointmentData.fee || 0,
                 totalAmount: appointmentData.totalAmount || appointmentData.amount || appointmentData.fee || 0,
                 patientName: appointmentData.patientName || myAccountName
             });
         } else {
-            // Nếu F5, quét lại danh sách trong local để không bị trắng trang
             const appointments = JSON.parse(localStorage.getItem("myAppointments") || "[]");
             const currentApp = appointments.findLast(app => 
                 app.status === "Pending Payment" || app.status?.includes("Pending")
@@ -59,42 +56,47 @@ const Payment = (props) => {
 
     /* ===================== LOGIC THANH TOÁN CHỐT DATABASE ===================== */
     const handleConfirm = async (method) => {
-    const appointmentId = lastBooking._id || lastBooking.id;
+        const appointmentId = lastBooking._id || lastBooking.id;
 
-    try {
-        // SỬA TẠI ĐÂY: Bỏ "/api" để khớp với server.js của Dũng
-        const response = await fetch(`http://localhost:5000/appointments/${appointmentId}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                status: "Confirmed",
-                paymentStatus: "ĐÃ THANH TOÁN",
-                paymentMethod: method,
-                finishDate: new Date().toLocaleDateString('vi-VN')
-            })
-        });
+        if (!appointmentId) {
+            alert("Lỗi: Không tìm thấy mã lịch hẹn. Vui lòng thử lại!");
+            return;
+        }
 
-        if (!response.ok) throw new Error("Cập nhật Database thất bại");
+        try {
+            const response = await fetch(`http://localhost:5000/appointments/${appointmentId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    status: "Confirmed",
+                    paymentStatus: "ĐÃ THANH TOÁN",
+                    paymentMethod: method
+                })
+            });
 
-        // 2. DỌN DẸP LOCALSTORAGE ĐỂ ĐỒNG BỘ UI NGAY LẬP TỨC
-        let myApps = JSON.parse(localStorage.getItem("myAppointments") || "[]");
-        const updatedMyApps = myApps.filter(app => (app._id || app.id) !== appointmentId);
-        localStorage.setItem("myAppointments", JSON.stringify(updatedMyApps));
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Cập nhật Database thất bại");
+            }
 
-        window.dispatchEvent(new Event("storage"));
+            let myApps = JSON.parse(localStorage.getItem("myAppointments") || "[]");
+            const updatedApps = myApps.map(app => 
+                (app._id === appointmentId || app.id === appointmentId) 
+                ? { ...app, status: "Confirmed", paymentStatus: "ĐÃ THANH TOÁN" } 
+                : app
+            );
+            localStorage.setItem("myAppointments", JSON.stringify(updatedApps));
 
-        alert("Thanh toán thành công! Lịch hẹn với " + lastBooking.doctorName + " đã được xác nhận.");
-        setModal(false);
-        history.push("/patient/appointment-status");
+            alert(`Thanh toán thành công! Hình thức: ${method === "QR" ? "Chuyển khoản" : "Tại quầy"}`);
+            setModal(false);
+            history.push("/patient/appointment-status");
 
-    } catch (error) {
-        console.error("Lỗi thanh toán:", error);
-        // Thông báo chi tiết hơn để Dũng dễ debug
-        alert("Lỗi: Không tìm thấy đường dẫn xử lý trên Server. Dũng kiểm tra xem đã dán hàm router.put('/:id') vào file routes/appointments.js chưa nhé!");
-    }
-};
+        } catch (error) {
+            console.error("Lỗi thanh toán:", error);
+            alert("Có lỗi xảy ra: " + error.message);
+        }
+    };
 
-    const qrUrl = "../image/QRCode.jpg";
     const isPaid = 
         lastBooking.status === "Confirmed" || 
         lastBooking.status === "Finished" || 
@@ -110,7 +112,6 @@ const Payment = (props) => {
 
                 <div style={{ flex: 1, height: "100%", overflowY: "auto", borderLeft: "6px solid #fdbb2d", display: "flex", flexDirection: "column" }}>
                     <div className="container-fluid p-0" style={{ width: "100%", padding: "40px" }}>
-                        
                         <div className="d-flex justify-content-between align-items-center mb-5">
                             <div>
                                 <h3 className="font-weight-bold text-dark mb-1 text-uppercase" style={{ letterSpacing: "1px" }}>💳 Chi tiết thanh toán</h3>
@@ -171,7 +172,6 @@ const Payment = (props) => {
                                                         {formatCurrency(lastBooking.doctorFees)}
                                                     </td>
                                                 </tr>
-
                                                 {lastBooking.selectedServices && lastBooking.selectedServices.map((service, index) => (
                                                     <tr key={index}>
                                                         <td className="text-left py-2">
@@ -181,7 +181,6 @@ const Payment = (props) => {
                                                         <td className="text-right align-middle text-success font-weight-bold">+{formatCurrency(service.price)}</td>
                                                     </tr>
                                                 ))}
-
                                                 <tr className="h4 font-weight-bold border-top" style={{ backgroundColor: "#fefce8" }}>
                                                     <td className="pt-4 text-dark text-left">TỔNG THANH TOÁN</td>
                                                     <td className="pt-4 text-right text-danger">{formatCurrency(lastBooking.totalAmount)}</td>
@@ -199,7 +198,6 @@ const Payment = (props) => {
                                                     ✓ GIAO DỊCH ĐÃ HOÀN TẤT
                                                 </Button>
                                             )}
-
                                             <Button outline color="dark" block className="py-2 font-weight-bold mt-2" style={{ borderRadius: "15px" }} onClick={() => history.push("/patient/appointment-status")}>
                                                 QUAY LẠI QUẢN LÝ
                                             </Button>
@@ -228,7 +226,13 @@ const Payment = (props) => {
                         </>
                     ) : (
                         <div>
-                            <img src={qrUrl} alt="QR Code" className="img-fluid mb-3 shadow" style={{ maxWidth: '220px', borderRadius: "10px" }} />
+                            {/* DÙNG ĐƯỜNG DẪN /qr.jpg VÌ FILE NẰM TRONG PUBLIC */}
+                            <img 
+                                src="/qr.jpg" 
+                                alt="QR Code" 
+                                className="img-fluid mb-3 shadow" 
+                                style={{ maxWidth: '220px', borderRadius: "10px" }} 
+                            />
                             <h5 className="text-danger font-weight-bold mb-3">{formatCurrency(lastBooking.totalAmount)}</h5>
                             <Button color="success" block className="rounded-pill font-weight-bold py-2" onClick={() => handleConfirm("QR")}>
                                 TÔI ĐÃ CHUYỂN KHOẢN XONG

@@ -9,9 +9,7 @@ const feedbackSchema = new Schema({
 });
 
 const appointmentSchema = new Schema({
-  // BẮT BUỘC PHẢI THÊM TRƯỜNG NÀY ĐỂ ĐỊNH DANH NGƯỜI ĐẶT
   bookedBy: { type: String, required: true, default: "GUEST" }, 
-
   patientName: { type: String, required: true },
   doctorName: { type: String, required: true },
   date: { type: String, required: true },
@@ -27,7 +25,22 @@ const appointmentSchema = new Schema({
   paymentStatus: { type: String, default: "CHƯA THANH TOÁN" },
   paymentMethod: { type: String, default: "" }, 
   finishDate: { type: String, default: "" },    
+  
   selectedServices: { type: Array, default: [] }, 
+  
+  // PHIẾU KHÁM: Thêm trường 'tests' vào đây
+  medicalDetails: {
+    serviceName: { type: String, default: "" },
+    gender: { type: String, default: "" },
+    dob: { type: String, default: "" },
+    hometown: { type: String, default: "" },
+    symptoms: { type: String, default: "" },
+    history: { type: String, default: "" },
+    tests: { type: String, default: "" }, // <--- BẮT BUỘC PHẢI THÊM DÒNG NÀY ĐỂ LƯU XÉT NGHIỆM
+    diagnosis: { type: String, default: "" },
+    prescription: { type: String, default: "" },
+    advice: { type: String, default: "" },
+  },
   
   googleMeetLink: { type: String, default: "" },
   feedback: {

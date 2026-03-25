@@ -1,22 +1,143 @@
 import React, { useState, useEffect } from "react"; 
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Input, Label, Row, Col } from "reactstrap";
 
-// Import ảnh giữ nguyên 100%
+// --- LOGO GIỮ NGUYÊN ---
 import nmdLogo from "../image/nmd.png";
 import alexnguyenLogo from "../image/alexx.jpg";
 import hoangvanthaiLogo from "../image/hoangvanthai.jpg";
 import lehoangnamLogo from "../image/lehoangnam.jpg";
 import lethuhaLogo from "../image/lethuha.jpg";
 import nguyenthuhaLogo from "../image/nguyenthuha.webp";
-import phamdangkhoaLogo from "../image/phamdangkhoa.webp";
+import phamdangkhoaLogo from "../image/phamdangkhoa.webp"
 import phamminhtuanLogo from "../image/phamminhtuan.png";
 import trannhatminhLogo from "../image/trannhatminh.jpg";
 import tranthithanhLogo from "../image/tranthithanh.jpg";
 import trinhcongsonLogo from "../image/trinhcongson.png";
-import vuhoangyenLogo from "../image/vuhoangyen.webp";
+import vuhoangyenLogo from "../image/vuhoangyen.webp"
+
+import lequangdao from "../image/lequangdao.jpg";
+import nguyenkimchi from "../image/nguyenkimchi.jpg";
+import phamvanduc from "../image/phamvanduc.webp";
+import danghonganh from "../image/danghonganh.jpg";
+import vuminhquan from "../image/vuminhquan.jpg";
+import tranthanhtam from "../image/tranthanhtam.jpg";
+import lehongdang from "../image/lehongdang.webp";
+import hoangbaolong from "../image/hoangbaolong.webp";
+import nguyenvanan from "../image/nguyenvanan.jpg";
+import tranthibinh from "../image/tranthibinh.jpg";
+import levancuong from "../image/levancuong.jpg";
+import phamthidung from "../image/phamthidung.jpg";
+import hoangvanem from "../image/hoanvanem.jpg";
+import phanthigiang from "../image/phanthigiang.jpg";
+import vuvanhai from "../image/vuvanhai.jpg";
+import dangthihoa from "../image/dangthihoa.jpg";
+import buivanhung from "../image/buivanhung.jpg";
+import dothilan from "../image/dothilan.jpg";
+import ngovanminh from "../image/ngovanminh.jpg";
+import lythingoc from "../image/lythingoc.jpg";
+import duongvanphuc from "../image/duongvanphuc.jpg";
+import daothiquynh from "../image/daothiquynh.jpg";
+import havanson from "../image/havanson.jpg";
+import chuthitrang from "../image/chuthitrang.jpg";
+import doanvantu from "../image/doanvantu.jpg";
+
+import lamthiuyen from "../image/lamthiuyen.webp";
+import trinhvanviet from "../image/trinhvanviet.webp";
+import phungthixuan from "../image/phungthixuan.webp";
+import maivanyen from "../image/maivanyen.webp";
+import caothianh from "../image/caothianh.webp";
+import dinhvanbac from "../image/dinhvanbac.webp";
+import kimthichuc from "../image/kimthichuc.webp";
+import quachvandanh from "../image/quachvandanh.webp";
+import luongthidao from "../image/luongthidao.webp";
+import nghiemvangia from "../image/nghiemvangia.webp";
+import tathihang from "../image/tathihang.webp";
+import vivanhy from "../image/vyvanhy.jpg";
+import diepthiich from "../image/diepthiich.png";
+import khavanky from "../image/khavanky.png";
+import nongthilien from "../image/nongthilien.webp";
+import auvanmanh from "../image/auvanmanh.jpg";
+import bethisnga from "../image/bethinga.jpg";
+import lucvanoanh from "../image/lucvanoanh.jpg";
+import macthiphuong from "../image/macthiphuong.webp";
+import thachvanquan from "../image/thachvanquan.webp";
+import lathirinh from "../image/lathirinh.webp";
+import kieuvansang from "../image/kieuvansang.webp";
+import leuthithao from "../image/leuthithao.webp";
+import vanvanuan from "../image/vanvanuan.png";
+import khongthivan from "../image/khongthivan.webp";
+import samvanxuyen from "../image/samvanxuyen.png";
+import tongthiy from "../image/tongthiy.webp";
+import bacvanzui from "../image/bacvanzui.png";
+import nguyenkieuchinh from "../image/nguyenkieuchinh.webp";
+import phamminhdang from "../image/phamminhdang.png";
+import lethidiem from "../image/lethidiem.webp";
+import hoangngocduy from "../image/hoangngocduy.png";
+import tranhoaigiang from "../image/tranhoaigiang.webp";
+import nguyennhathuy from "../image/nguyennhathuy.png";
+import vuthuhuyen from "../image/vuthuhuyen.png";
+import phanbaokhanh from "../image/phanbaokhanh.png";
+import dangthuylam from "../image/dangthuylam.png";
+import buikhanhly from "../image/buikhanhly.png";
+import dohoanglong from "../image/dohoanglong.png";
+
+import ngothanhnga from "../image/ngothinga.jpg"; 
+import lyhongnhung from "../image/lyhongnhung.jpg";
+import duongtuanphong from "../image/duongtuanphong.jpg";
+import daominhquan from "../image/daominhquan.jpg";
+import hakieuanh from "../image/hakieuanh.jpg";
+import chuminhsang from "../image/chuminhsang.jpg";
+import doanthuthuy from "../image/doanthuthuy.jpg";
+import lambaotin from "../image/lambaotin.jpg";
+import trinhuyenthu from "../image/trinhuyenthu.jpg";
+import phungthevinh from "../image/phungthevinh.jpg";
+import caothanhxuan from "../image/caothanhxuan.jpg";
+import dinhtronghieu from "../image/dinhtronghieu.jpg";
+import kimbaongan from "../image/kimbaongan.jpg";
+import quachtuankiet from "../image/quachtuankiet.jpg";
+import luongminhtriet from "../image/luongminhtriet.jpg";
+import nghiemthuychi from "../image/nghiemthuychi.jpg";
+import taanhdung from "../image/taanhdung.jpg";
+import vikimlien from "../image/vikimlien.jpg";
+import diepbaongoc from "../image/diepbaongoc.jpg";
+import khachandong from "../image/khachandong.jpg";
+import nongthuyhang from "../image/nongthuyhang.jpg";
+import auminhtuan from "../image/auminhtuan.jpg";
+import bethanhhuyen from "../image/bethanhhuyen.jpg";
+import lucbaonam from "../image/lucbaonam.jpg";
+
+import nguyenhoaian from "../image/nguyenhoaian.jpg";
+import leminhtam from "../image/leminhtam.jpg";
+import trinhthuyquynh from "../image/trinhthuyquynh.jpg";
+import dotuankiet from "../image/dotuankiet.jpg";
+import tranbaongoc from "../image/tranbaongoc.jpg";
+import vuhoanglong from "../image/vuhoanglong.jpg";
+import haanhtuan from "../image/haanhtuan.jpg";
+import phanthanhthao from "../image/phanthanhthao.jpg";
+import nguyenminhduc from "../image/nguyenminhduc.jpg";
+import lethutrang from "../image/lethutrang.jpg";
+import hoanggiabao from "../image/hoanggiabao.jpg";
+import phamminhanh from "../image/phamminhanh.jpg";
+import danghuunam from "../image/danghuunam.jpg";
+import tranvanhung from "../image/tranvanhung.png";
+import lythanhhang from "../image/lythanhhang.jpg";
+import ngoquocviet from "../image/ngoquocviet.jpg";
+import buiminhtuan from "../image/buiminhtuan.jpg";
+import dohonglien from "../image/dohonglien.jpg";
+import vovankiet from "../image/vovankiet.jpg";
+import nguyenthaison from "../image/nguyenthaison.jpg";
+import daomylinh from "../image/daomylinh.jpg";
+import trannhathoang from "../image/trannhathoang.jpg";
+import lequangvinh from "../image/lequangvinh.jpg";
+import nguyenthitam from "../image/nguyenthitam.jpg";
+import phamgiahuy from "../image/phamgiahuy.jpg";
+import dangthuthuy from "../image/dangthuthuy.jpg";
+import phanvantri from "../image/phanvantri.jpg";
+import lamthevinh from "../image/lamthevinh.jpg";
+import hakimchi from "../image/hakimchi.png";
+import truongminhnhat from "../image/truongminhnhat.jpg";
 
 const DoctorManagement = () => {
-  // DANH SÁCH 130 BÁC SĨ (Giữ nguyên data của bạn)
   const initialDoctors = [
     { id: 1, name: "GS. TS. NGUYỄN MẠNH DŨNG", specialization: "Nội Tổng Quát", phone: "0912.000.111", status: "Đang trực", img: nmdLogo },
     { id: 2, name: "PGS. TS. PHẠM MINH TUẤN", specialization: "Tim mạch", phone: "0905.123.456", status: "Đang trực", img: phamminhtuanLogo },
@@ -30,127 +151,126 @@ const DoctorManagement = () => {
     { id: 10, name: "TS. BS. PHẠM ĐĂNG KHOA", specialization: "Thần kinh", phone: "0900.333.444", status: "Đang trực", img: phamdangkhoaLogo },
     { id: 11, name: "PGS. TS. TRẦN NHẬT MINH", specialization: "Tai Mũi Họng", phone: "0888.555.666", status: "Đang trực", img: trannhatminhLogo },
     { id: 12, name: "TS. BS. TRẦN THỊ THANH", specialization: "Y học Cổ truyền", phone: "0877.777.888", status: "Đang trực", img: tranthithanhLogo },
-    { id: 13, name: "PGS. TS. LÊ QUANG ĐẠO", specialization: "Chuyên khoa Mắt", phone: "0912.111.013", status: "Đang trực", img: alexnguyenLogo },
-    { id: 14, name: "TS. BS. NGUYỄN KIM CHI", specialization: "Ung bướu", phone: "0912.111.014", status: "Đang trực", img: lethuhaLogo },
-    { id: 15, name: "PGS. TS. PHẠM VĂN ĐỨC", specialization: "Cộng hưởng từ", phone: "0912.111.015", status: "Đang trực", img: phamminhtuanLogo },
-    { id: 16, name: "TS. BS. ĐẶNG HỒNG ANH", specialization: "Vô sinh - Hiếm muộn", phone: "0912.111.016", status: "Đang trực", img: nguyenthuhaLogo },
-    { id: 17, name: "PGS. TS. VŨ MINH QUÂN", specialization: "Phục hồi chức năng", phone: "0912.111.017", status: "Đang trực", img: trinhcongsonLogo },
-    { id: 18, name: "TS. BS. TRẦN THANH TÂM", specialization: "Trị liệu Tâm lý", phone: "0912.111.018", status: "Đang trực", img: vuhoangyenLogo },
-    { id: 19, name: "PGS. TS. LÊ HỒNG ĐĂNG", specialization: "Nha khoa", phone: "0912.111.019", status: "Đang trực", img: trannhatminhLogo },
-    { id: 20, name: "TS. BS. HOÀNG BẢO LONG", specialization: "Nha khoa", phone: "0912.111.020", status: "Đang trực", img: hoangvanthaiLogo },
-    { id: 21, name: "BS. Nguyễn Văn An", specialization: "Nha khoa", phone: "0912.111.021", status: "Đang trực", img: phamminhtuanLogo },
-    { id: 22, name: "BS. Trần Thị Bình", specialization: "Tuyến giáp", phone: "0912.111.022", status: "Đang trực", img: lethuhaLogo },
-    { id: 23, name: "BS. Lê Văn Cường", specialization: "Dị ứng miễn dịch", phone: "0912.111.023", status: "Đang trực", img: alexnguyenLogo },
-    { id: 24, name: "BS. Phạm Thị Dung", specialization: "Truyền nhiễm", phone: "0912.111.024", status: "Đang trực", img: nguyenthuhaLogo },
-    { id: 25, name: "BS. Hoàng Văn Em", specialization: "Cơ Xương Khớp", phone: "0912.111.025", status: "Đang trực", img: hoangvanthaiLogo },
-    { id: 26, name: "BS. Phan Thị Giang", specialization: "Thần kinh", phone: "0912.111.026", status: "Đang trực", img: vuhoangyenLogo },
-    { id: 27, name: "BS. Vũ Văn Hải", specialization: "Tiêu hóa", phone: "0912.111.027", status: "Đang trực", img: trinhcongsonLogo },
-    { id: 28, name: "BS. Đặng Thị Hoa", specialization: "Tim mạch", phone: "0912.111.028", status: "Đang trực", img: lehoangnamLogo },
-    { id: 29, name: "BS. Bùi Văn Hùng", specialization: "Tai Mũi Họng", phone: "0912.111.029", status: "Đang trực", img: phamdangkhoaLogo },
-    { id: 30, name: "BS. Đỗ Thị Lan", specialization: "Cột sống", phone: "0912.111.030", status: "Đang trực", img: trannhatminhLogo },
-    { id: 31, name: "BS. Ngô Văn Minh", specialization: "Y học Cổ truyền", phone: "0912.111.031", status: "Đang trực", img: tranthithanhLogo },
-    { id: 32, name: "BS. Lý Thị Ngọc", specialization: "Châm cứu", phone: "0912.111.032", status: "Đang trực", img: phamminhtuanLogo },
-    { id: 33, name: "BS. Dương Văn Phúc", specialization: "Sản Phụ khoa", phone: "0912.111.033", status: "Đang trực", img: lethuhaLogo },
-    { id: 34, name: "BS. Đào Thị Quỳnh", specialization: "Siêu âm thai", phone: "0912.111.034", status: "Đang trực", img: nguyenthuhaLogo },
-    { id: 35, name: "BS. Hà Văn Sơn", specialization: "Nhi khoa", phone: "0912.111.035", status: "Đang trực", img: vuhoangyenLogo },
-    { id: 36, name: "BS. Chu Thị Trang", specialization: "Da liễu", phone: "0912.111.036", status: "Đang trực", img: trinhcongsonLogo },
-    { id: 37, name: "BS. Đoàn Văn Tú", specialization: "Bệnh Viêm gan", phone: "0912.111.037", status: "Đang trực", img: alexnguyenLogo },
-    { id: 38, name: "BS. Lâm Thị Uyên", specialization: "Sức khỏe tâm thần", phone: "0912.111.038", status: "Đang trực", img: hoangvanthaiLogo },
-    { id: 39, name: "BS. Trịnh Văn Việt", specialization: "Dị ứng miễn dịch", phone: "0912.111.039", status: "Đang trực", img: lehoangnamLogo },
-    { id: 40, name: "BS. Phùng Thị Xuân", specialization: "Hô hấp - Phổi", phone: "0912.111.040", status: "Đang trực", img: phamdangkhoaLogo },
-    { id: 41, name: "BS. Mai Văn Yên", specialization: "Ngoại thần kinh", phone: "0912.111.041", status: "Đang trực", img: trannhatminhLogo },
-    { id: 42, name: "BS. Cao Thị Anh", specialization: "Nam học", phone: "0912.111.042", status: "Đang trực", img: tranthithanhLogo },
-    { id: 43, name: "BS. Đinh Văn Bắc", specialization: "Chuyên khoa Mắt", phone: "0912.111.043", status: "Đang trực", img: phamminhtuanLogo },
-    { id: 44, name: "BS. Kim Thị Chúc", specialization: "Thận - Tiết niệu", phone: "0912.111.044", status: "Đang trực", img: lethuhaLogo },
-    { id: 45, name: "BS. Quách Văn Danh", specialization: "Nội khoa", phone: "0912.111.045", status: "Đang trực", img: nguyenthuhaLogo },
-    { id: 46, name: "BS. Lương Thị Đào", specialization: "Nha khoa", phone: "0912.111.046", status: "Đang trực", img: vuhoangyenLogo },
-    { id: 47, name: "BS. Nghiêm Văn Gia", specialization: "Tiểu đường - Nội tiết", phone: "0912.111.047", status: "Đang trực", img: trinhcongsonLogo },
-    { id: 48, name: "BS. Tạ Thị Hằng", specialization: "Phục hồi chức năng", phone: "0912.111.048", status: "Đang trực", img: alexnguyenLogo },
-    { id: 49, name: "BS. Vi Văn Hỷ", specialization: "Cộng hưởng từ", phone: "0912.111.049", status: "Đang trực", img: hoangvanthaiLogo },
-    { id: 50, name: "BS. Diệp Thị Ích", specialization: "Cắt lớp vi tính", phone: "0912.111.050", status: "Đang trực", img: lehoangnamLogo },
-    { id: 51, name: "BS. Kha Văn Kỷ", specialization: "Nội soi Tiêu hóa", phone: "0912.111.051", status: "Đang trực", img: phamdangkhoaLogo },
-    { id: 52, name: "BS. Nông Thị Liên", specialization: "Ung bướu", phone: "0912.111.052", status: "Đang trực", img: trannhatminhLogo },
-    { id: 53, name: "BS. Âu Văn Mạnh", specialization: "Da liễu thẩm mỹ", phone: "0912.111.053", status: "Đang trực", img: tranthithanhLogo },
-    { id: 54, name: "BS. Bế Thị Nga", specialization: "Truyền nhiễm", phone: "0912.111.054", status: "Đang trực", img: phamminhtuanLogo },
-    { id: 55, name: "BS. Lục Văn Oanh", specialization: "Thẩm mỹ", phone: "0912.111.055", status: "Đang trực", img: lethuhaLogo },
-    { id: 56, name: "BS. Mạc Thị Phương", specialization: "Trị liệu Tâm lý", phone: "0912.111.056", status: "Đang trực", img: nguyenthuhaLogo },
-    { id: 57, name: "BS. Thạch Văn Quân", specialization: "Vô sinh - Hiếm muộn", phone: "0912.111.057", status: "Đang trực", img: vuhoangyenLogo },
-    { id: 58, name: "BS. La Thị Rinh", specialization: "Chấn thương", phone: "0912.111.058", status: "Đang trực", img: trinhcongsonLogo },
-    { id: 59, name: "BS. Kiều Văn Sang", specialization: "Nha khoa", phone: "0912.111.059", status: "Đang trực", img: alexnguyenLogo },
-    { id: 60, name: "BS. Lều Thị Thảo", specialization: "Nha khoa", phone: "0912.111.060", status: "Đang trực", img: hoangvanthaiLogo },
-    { id: 61, name: "BS. Văn Văn Uẩn", specialization: "Nha khoa", phone: "0912.111.061", status: "Đang trực", img: lehoangnamLogo },
-    { id: 62, name: "BS. Khổng Thị Vân", specialization: "Nha khoa", phone: "0912.111.062", status: "Đang trực", img: phamdangkhoaLogo },
-    { id: 63, name: "BS. Sầm Văn Xuyên", specialization: "Nha khoa", phone: "0912.111.063", status: "Đang trực", img: trannhatminhLogo },
-    { id: 64, name: "BS. Tòng Thị Ý", specialization: "Nha khoa", phone: "0912.111.064", status: "Đang trực", img: tranthithanhLogo },
-    { id: 65, name: "BS. Bạc Văn Zui", specialization: "Tuyến giáp", phone: "0912.111.065", status: "Đang trực", img: phamminhtuanLogo },
-    { id: 66, name: "BS. Nguyễn Kiều Chinh", specialization: "Chuyên khoa Vú", phone: "0912.111.066", status: "Đang trực", img: lethuhaLogo },
-    { id: 67, name: "BS. Phạm Minh Đăng", specialization: "Ngoại khoa", phone: "0912.111.067", status: "Đang trực", img: nguyenthuhaLogo },
-    { id: 68, name: "BS. Lê Thị Diễm", specialization: "Chụp X-quang", phone: "0912.111.068", status: "Đang trực", img: vuhoangyenLogo },
-    { id: 69, name: "BS. Hoàng Ngọc Duy", specialization: "Cơ Xương Khớp", phone: "0912.111.069", status: "Đang trực", img: trinhcongsonLogo },
-    { id: 70, name: "BS. Trần Hoài Giang", specialization: "Thần kinh", phone: "0912.111.070", status: "Đang trực", img: alexnguyenLogo },
-    { id: 71, name: "BS. Nguyễn Nhật Huy", specialization: "Tiêu hóa", phone: "0912.111.071", status: "Đang trực", img: hoangvanthaiLogo },
-    { id: 72, name: "BS. Vũ Thu Huyền", specialization: "Tim mạch", phone: "0912.111.072", status: "Đang trực", img: lehoangnamLogo },
-    { id: 73, name: "BS. Phan Bảo Khánh", specialization: "Tai Mũi Họng", phone: "0912.111.073", status: "Đang trực", img: phamdangkhoaLogo },
-    { id: 74, name: "BS. Đặng Thụy Lâm", specialization: "Cột sống", phone: "0912.111.074", status: "Đang trực", img: trannhatminhLogo },
-    { id: 75, name: "BS. Bùi Khánh Ly", specialization: "Y học Cổ truyền", phone: "0912.111.075", status: "Đang trực", img: tranthithanhLogo },
-    { id: 76, name: "BS. Đỗ Hoàng Long", specialization: "Sản Phụ khoa", phone: "0912.111.076", status: "Đang trực", img: phamminhtuanLogo },
-    { id: 77, name: "BS. Ngô Thanh Nga", specialization: "Nhi khoa", phone: "0912.111.077", status: "Đang trực", img: lethuhaLogo },
-    { id: 78, name: "BS. Lý Hồng Nhung", specialization: "Da liễu", phone: "0912.111.078", status: "Đang trực", img: nguyenthuhaLogo },
-    { id: 79, name: "BS. Dương Tuấn Phong", specialization: "Sức khỏe tâm thần", phone: "0912.111.079", status: "Đang trực", img: vuhoangyenLogo },
-    { id: 80, name: "BS. Đào Minh Quân", specialization: "Hô hấp - Phổi", phone: "0912.111.080", status: "Đang trực", img: trinhcongsonLogo },
-    { id: 81, name: "BS. Hà Kiều Anh", specialization: "Ngoại thần kinh", phone: "0912.111.081", status: "Đang trực", img: alexnguyenLogo },
-    { id: 82, name: "BS. Chu Minh Sang", specialization: "Nam học", phone: "0912.111.082", status: "Đang trực", img: hoangvanthaiLogo },
-    { id: 83, name: "BS. Đoàn Thu Thủy", specialization: "Chuyên khoa Mắt", phone: "0912.111.083", status: "Đang trực", img: lehoangnamLogo },
-    { id: 84, name: "BS. Lâm Bảo Tín", specialization: "Thận - Tiết niệu", phone: "0912.111.084", status: "Đang trực", img: phamdangkhoaLogo },
-    { id: 85, name: "BS. Trịnh Uyên Thư", specialization: "Nội khoa", phone: "0912.111.085", status: "Đang trực", img: trannhatminhLogo },
-    { id: 86, name: "BS. Phùng Thế Vinh", specialization: "Nha khoa", phone: "0912.111.086", status: "Đang trực", img: tranthithanhLogo },
-    { id: 87, name: "BS. Cao Thanh Xuân", specialization: "Tiểu đường - Nội tiết", phone: "0912.111.087", status: "Đang trực", img: phamminhtuanLogo },
-    { id: 88, name: "BS. Đinh Trọng Hiếu", specialization: "Phục hồi chức năng", phone: "0912.111.088", status: "Đang trực", img: lethuhaLogo },
-    { id: 89, name: "BS. Kim Bảo Ngân", specialization: "Cộng hưởng từ", phone: "0912.111.089", status: "Đang trực", img: nguyenthuhaLogo },
-    { id: 90, name: "BS. Quách Tuấn Kiệt", specialization: "Cắt lớp vi tính", phone: "0912.111.090", status: "Đang trực", img: vuhoangyenLogo },
-    { id: 91, name: "BS. Lương Minh Triết", specialization: "Nội soi Tiêu hóa", phone: "0912.111.091", status: "Đang trực", img: trinhcongsonLogo },
-    { id: 92, name: "BS. Nghiêm Thùy Chi", specialization: "Ung bướu", phone: "0912.111.092", status: "Đang trực", img: alexnguyenLogo },
-    { id: 93, name: "BS. Tạ Anh Dũng", specialization: "Da liễu thẩm mỹ", phone: "0912.111.093", status: "Đang trực", img: hoangvanthaiLogo },
-    { id: 94, name: "BS. Vi Kim Liên", specialization: "Truyền nhiễm", phone: "0912.111.094", status: "Đang trực", img: lehoangnamLogo },
-    { id: 95, name: "BS. Diệp Bảo Ngọc", specialization: "Thẩm mỹ", phone: "0912.111.095", status: "Đang trực", img: phamdangkhoaLogo },
-    { id: 96, name: "BS. Kha Chấn Đông", specialization: "Trị liệu Tâm lý", phone: "0912.111.096", status: "Đang trực", img: trannhatminhLogo },
-    { id: 97, name: "BS. Nông Thúy Hằng", specialization: "Vô sinh - Hiếm muộn", phone: "0912.111.097", status: "Đang trực", img: tranthithanhLogo },
-    { id: 98, name: "BS. Âu Minh Tuấn", specialization: "Nha khoa", phone: "0912.111.098", status: "Đang trực", img: phamminhtuanLogo },
-    { id: 99, name: "BS. Bế Thanh Huyền", specialization: "Nha khoa", phone: "0912.111.099", status: "Đang trực", img: lethuhaLogo },
-    { id: 100, name: "BS. Lục Bảo Nam", specialization: "Nha khoa", phone: "0912.111.100", status: "Đang trực", img: nguyenthuhaLogo },
-    { id: 101, name: "ThS. BS. Nguyễn Hoài An", specialization: "Tâm lý từ xa", phone: "0912.111.101", status: "Đang trực", img: phamminhtuanLogo },
-    { id: 102, name: "Chuyên gia Lê Minh Tâm", specialization: "Tâm lý từ xa", phone: "0912.111.102", status: "Đang trực", img: lethuhaLogo },
-    { id: 103, name: "BS. Trịnh Thúy Quỳnh", specialization: "Tâm lý từ xa", phone: "0912.111.103", status: "Đang trực", img: vuhoangyenLogo },
-    { id: 104, name: "ThS. Đỗ Tuấn Kiệt", specialization: "Tâm lý từ xa", phone: "0912.111.104", status: "Đang trực", img: alexnguyenLogo },
-    { id: 105, name: "PGS. TS. Trần Bảo Ngọc", specialization: "Tâm lý từ xa", phone: "0912.111.105", status: "Đang trực", img: nguyenthuhaLogo },
-    { id: 106, name: "BS. Vũ Hoàng Long", specialization: "Tâm lý từ xa", phone: "0912.111.106", status: "Đang trực", img: trinhcongsonLogo },
-    { id: 107, name: "Chuyên gia Hà Anh Tuấn", specialization: "Tâm lý từ xa", phone: "0912.111.107", status: "Đang trực", img: hoangvanthaiLogo },
-    { id: 108, name: "BS. Phan Thanh Thảo", specialization: "Tâm lý từ xa", phone: "0912.111.108", status: "Đang trực", img: trannhatminhLogo },
-    { id: 109, name: "BS. Nguyễn Minh Đức", specialization: "Da liễu từ xa", phone: "0912.111.109", status: "Đang trực", img: phamdangkhoaLogo },
-    { id: 110, name: "ThS. BS. Lê Thu Trang", specialization: "Da liễu từ xa", phone: "0912.111.110", status: "Đang trực", img: lethuhaLogo },
-    { id: 111, name: "BS. Hoàng Gia Bảo", specialization: "Da liễu từ xa", phone: "0912.111.111", status: "Đang trực", img: tranthithanhLogo },
-    { id: 112, name: "BS. Phạm Minh Anh", specialization: "Da liễu từ xa", phone: "0912.111.112", status: "Đang trực", img: vuhoangyenLogo },
-    { id: 113, name: "PGS. TS. Đặng Hữu Nam", specialization: "Cơ-Xương-Khớp từ xa", phone: "0912.111.113", status: "Đang trực", img: alexnguyenLogo },
-    { id: 114, name: "BS. Trần Văn Hùng", specialization: "Cơ-Xương-Khớp từ xa", phone: "0912.111.114", status: "Đang trực", img: trinhcongsonLogo },
-    { id: 115, name: "BS. Lý Thanh Hằng", specialization: "Cơ-Xương-Khớp từ xa", phone: "0912.111.115", status: "Đang trực", img: nguyenthuhaLogo },
-    { id: 116, name: "ThS. BS. Ngô Quốc Việt", specialization: "Cơ-Xương-Khớp từ xa", phone: "0912.111.116", status: "Đang trực", img: hoangvanthaiLogo },
-    { id: 117, name: "BS. Bùi Minh Tuấn", specialization: "Tiêu hóa từ xa", phone: "0912.111.117", status: "Đang trực", img: phamminhtuanLogo },
-    { id: 118, name: "BS. Đỗ Hồng Liên", specialization: "Tiêu hóa từ xa", phone: "0912.111.118", status: "Đang trực", img: lethuhaLogo },
-    { id: 119, name: "TS. BS. Võ Văn Kiệt", specialization: "Tiêu hóa từ xa", phone: "0912.111.119", status: "Đang trực", img: trannhatminhLogo },
-    { id: 120, name: "BS. Nguyễn Thái Sơn", specialization: "Tim mạch từ xa", phone: "0912.111.120", status: "Đang trực", img: lehoangnamLogo },
-    { id: 121, name: "ThS. BS. Đào Mỹ Linh", specialization: "Tim mạch từ xa", phone: "0912.111.121", status: "Đang trực", img: vuhoangyenLogo },
-    { id: 122, name: "BS. Trần Nhật Hoàng", specialization: "Tim mạch từ xa", phone: "0912.111.122", status: "Đang trực", img: phamdangkhoaLogo },
-    { id: 123, name: "BS. Lê Quang Vinh", specialization: "Tai Mũi Họng từ xa", phone: "0912.111.123", status: "Đang trực", img: alexnguyenLogo },
-    { id: 124, name: "BS. Nguyễn Thị Tâm", specialization: "Tai Mũi Họng từ xa", phone: "0912.111.124", status: "Đang trực", img: tranthithanhLogo },
-    { id: 125, name: "TS. BS. Phạm Gia Huy", specialization: "Tai Mũi Họng từ xa", phone: "0912.111.125", status: "Đang trực", img: trinhcongsonLogo },
-    { id: 126, name: "BS. Đặng Thu Thủy", specialization: "Thần kinh từ xa", phone: "0912.111.126", status: "Đang trực", img: nguyenthuhaLogo },
-    { id: 127, name: "BS. Phan Văn Trị", specialization: "Thần kinh từ xa", phone: "0912.111.127", status: "Đang trực", img: hoangvanthaiLogo },
-    { id: 128, name: "PGS. TS. Lâm Thế Vinh", specialization: "Thần kinh từ xa", phone: "0912.111.128", status: "Đang trực", img: alexnguyenLogo },
-    { id: 129, name: "Chuyên gia Hà Kim Chi", specialization: "Thần kinh từ xa", phone: "0912.111.129", status: "Đang trực", img: lethuhaLogo },
-    { id: 130, name: "BS. Trương Minh Nhật", specialization: "Thần kinh từ xa", phone: "0912.111.130", status: "Đang trực", img: phamminhtuanLogo },
+    { id: 13, name: "PGS. TS. LÊ QUANG ĐẠO", specialization: "Chuyên khoa Mắt", phone: "0912.111.013", status: "Đang trực", img: lequangdao },
+    { id: 14, name: "TS. BS. NGUYỄN KIM CHI", specialization: "Ung bướu", phone: "0912.111.014", status: "Đang trực", img: nguyenkimchi },
+    { id: 15, name: "PGS. TS. PHẠM VĂN ĐỨC", specialization: "Cộng hưởng từ", phone: "0912.111.015", status: "Đang trực", img: phamvanduc },
+    { id: 16, name: "TS. BS. ĐẶNG HỒNG ANH", specialization: "Vô sinh - Hiếm muộn", phone: "0912.111.016", status: "Đang trực", img: danghonganh },
+    { id: 17, name: "PGS. TS. VŨ MINH QUÂN", specialization: "Phục hồi chức năng", phone: "0912.111.017", status: "Đang trực", img: vuminhquan },
+    { id: 18, name: "TS. BS. TRẦN THANH TÂM", specialization: "Trị liệu Tâm lý", phone: "0912.111.018", status: "Đang trực", img: tranthanhtam },
+    { id: 19, name: "PGS. TS. LÊ HỒNG ĐĂNG", specialization: "Nha khoa", phone: "0912.111.019", status: "Đang trực", img: lehongdang },
+    { id: 20, name: "TS. BS. HOÀNG BẢO LONG", specialization: "Nha khoa", phone: "0912.111.020", status: "Đang trực", img: hoangbaolong },
+    { id: 21, name: "BS. Nguyễn Văn An", specialization: "Nha khoa", phone: "0912.111.021", status: "Đang trực", img: nguyenvanan },
+    { id: 22, name: "BS. Trần Thị Bình", specialization: "Tuyến giáp", phone: "0912.111.022", status: "Đang trực", img: tranthibinh },
+    { id: 23, name: "BS. Lê Văn Cường", specialization: "Dị ứng miễn dịch", phone: "0912.111.023", status: "Đang trực", img: levancuong },
+    { id: 24, name: "BS. Phạm Thị Dung", specialization: "Truyền nhiễm", phone: "0912.111.024", status: "Đang trực", img: phamthidung },
+    { id: 25, name: "BS. Hoàng Văn Em", specialization: "Cơ Xương Khớp", phone: "0912.111.025", status: "Đang trực", img: hoangvanem },
+    { id: 26, name: "BS. Phan Thị Giang", specialization: "Thần kinh", phone: "0912.111.026", status: "Đang trực", img: phanthigiang },
+    { id: 27, name: "BS. Vũ Văn Hải", specialization: "Tiêu hóa", phone: "0912.111.027", status: "Đang trực", img: vuvanhai },
+    { id: 28, name: "BS. Đặng Thị Hoa", specialization: "Tim mạch", phone: "0912.111.028", status: "Đang trực", img: dangthihoa },
+    { id: 29, name: "BS. Bùi Văn Hùng", specialization: "Tai Mũi Họng", phone: "0912.111.029", status: "Đang trực", img: buivanhung },
+    { id: 30, name: "BS. Đỗ Thị Lan", specialization: "Cột sống", phone: "0912.111.030", status: "Đang trực", img: dothilan },
+    { id: 31, name: "BS. Ngô Văn Minh", specialization: "Y học Cổ truyền", phone: "0912.111.031", status: "Đang trực", img: ngovanminh },
+    { id: 32, name: "BS. Lý Thị Ngọc", specialization: "Châm cứu", phone: "0912.111.032", status: "Đang trực", img: lythingoc },
+    { id: 33, name: "BS. Dương Văn Phúc", specialization: "Sản Phụ khoa", phone: "0912.111.033", status: "Đang trực", img: duongvanphuc },
+    { id: 34, name: "BS. Đào Thị Quỳnh", specialization: "Siêu âm thai", phone: "0912.111.034", status: "Đang trực", img: daothiquynh },
+    { id: 35, name: "BS. Hà Văn Sơn", specialization: "Nhi khoa", phone: "0912.111.035", status: "Đang trực", img: havanson },
+    { id: 36, name: "BS. Chu Thị Trang", specialization: "Da liễu", phone: "0912.111.036", status: "Đang trực", img: chuthitrang },
+    { id: 37, name: "BS. Đoàn Văn Tú", specialization: "Bệnh Viêm gan", phone: "0912.111.037", status: "Đang trực", img: doanvantu },
+    { id: 38, name: "BS. Lâm Thị Uyên", specialization: "Sức khỏe tâm thần", phone: "0912.111.038", status: "Đang trực", img: lamthiuyen },
+    { id: 39, name: "BS. Trịnh Văn Việt", specialization: "Dị ứng miễn dịch", phone: "0912.111.039", status: "Đang trực", img: trinhvanviet },
+    { id: 40, name: "BS. Phùng Thị Xuân", specialization: "Hô hấp - Phổi", phone: "0912.111.040", status: "Đang trực", img: phungthixuan },
+    { id: 41, name: "BS. Mai Văn Yên", specialization: "Ngoại thần kinh", phone: "0912.111.041", status: "Đang trực", img: maivanyen },
+    { id: 42, name: "BS. Cao Thị Anh", specialization: "Nam học", phone: "0912.111.042", status: "Đang trực", img: caothianh },
+    { id: 43, name: "BS. Đinh Văn Bắc", specialization: "Chuyên khoa Mắt", phone: "0912.111.043", status: "Đang trực", img: dinhvanbac },
+    { id: 44, name: "BS. Kim Thị Chúc", specialization: "Thận - Tiết niệu", phone: "0912.111.044", status: "Đang trực", img: kimthichuc },
+    { id: 45, name: "BS. Quách Văn Danh", specialization: "Nội khoa", phone: "0912.111.045", status: "Đang trực", img: quachvandanh },
+    { id: 46, name: "BS. Lương Thị Đào", specialization: "Nha khoa", phone: "0912.111.046", status: "Đang trực", img: luongthidao },
+    { id: 47, name: "BS. Nghiêm Văn Gia", specialization: "Tiểu đường - Nội tiết", phone: "0912.111.047", status: "Đang trực", img: nghiemvangia },
+    { id: 48, name: "BS. Tạ Thị Hằng", specialization: "Phục hồi chức năng", phone: "0912.111.048", status: "Đang trực", img: tathihang },
+    { id: 49, name: "BS. Vi Văn Hỷ", specialization: "Cộng hưởng từ", phone: "0912.111.049", status: "Đang trực", img: vivanhy },
+    { id: 50, name: "BS. Diệp Thị Ích", specialization: "Cắt lớp vi tính", phone: "0912.111.050", status: "Đang trực", img: diepthiich },
+    { id: 51, name: "BS. Kha Văn Kỷ", specialization: "Nội soi Tiêu hóa", phone: "0912.111.051", status: "Đang trực", img: khavanky },
+    { id: 52, name: "BS. Nông Thị Liên", specialization: "Ung bướu", phone: "0912.111.052", status: "Đang trực", img: nongthilien },
+    { id: 53, name: "BS. Âu Văn Mạnh", specialization: "Da liễu thẩm mỹ", phone: "0912.111.053", status: "Đang trực", img: auvanmanh },
+    { id: 54, name: "BS. Bế Thị Nga", specialization: "Truyền nhiễm", phone: "0912.111.054", status: "Đang trực", img: bethisnga },
+    { id: 55, name: "BS. Lục Văn Oanh", specialization: "Thẩm mỹ", phone: "0912.111.055", status: "Đang trực", img: lucvanoanh },
+    { id: 56, name: "BS. Mạc Thị Phương", specialization: "Trị liệu Tâm lý", phone: "0912.111.056", status: "Đang trực", img: macthiphuong },
+    { id: 57, name: "BS. Thạch Văn Quân", specialization: "Vô sinh - Hiếm muộn", phone: "0912.111.057", status: "Đang trực", img: thachvanquan },
+    { id: 58, name: "BS. La Thị Rinh", specialization: "Chấn thương", phone: "0912.111.058", status: "Đang trực", img: lathirinh },
+    { id: 59, name: "BS. Kiều Văn Sang", specialization: "Nha khoa", phone: "0912.111.059", status: "Đang trực", img: kieuvansang },
+    { id: 60, name: "BS. Lều Thị Thảo", specialization: "Nha khoa", phone: "0912.111.060", status: "Đang trực", img: leuthithao },
+    { id: 61, name: "BS. Văn Văn Uẩn", specialization: "Nha khoa", phone: "0912.111.061", status: "Đang trực", img: vanvanuan },
+    { id: 62, name: "BS. Khổng Thị Vân", specialization: "Nha khoa", phone: "0912.111.062", status: "Đang trực", img: khongthivan },
+    { id: 63, name: "BS. Sầm Văn Xuyên", specialization: "Nha khoa", phone: "0912.111.063", status: "Đang trực", img: samvanxuyen },
+    { id: 64, name: "BS. Tòng Thị Ý", specialization: "Nha khoa", phone: "0912.111.064", status: "Đang trực", img: tongthiy },
+    { id: 65, name: "BS. Bạc Văn Zui", specialization: "Tuyến giáp", phone: "0912.111.065", status: "Đang trực", img: bacvanzui },
+    { id: 66, name: "BS. Nguyễn Kiều Chinh", specialization: "Chuyên khoa Vú", phone: "0912.111.066", status: "Đang trực", img: nguyenkieuchinh },
+    { id: 67, name: "BS. Phạm Minh Đăng", specialization: "Ngoại khoa", phone: "0912.111.067", status: "Đang trực", img: phamminhdang },
+    { id: 68, name: "BS. Lê Thị Diễm", specialization: "Chụp X-quang", phone: "0912.111.068", status: "Đang trực", img: lethidiem },
+    { id: 69, name: "BS. Hoàng Ngọc Duy", specialization: "Cơ Xương Khớp", phone: "0912.111.069", status: "Đang trực", img: hoangngocduy },
+    { id: 70, name: "BS. Trần Hoài Giang", specialization: "Thần kinh", phone: "0912.111.070", status: "Đang trực", img: tranhoaigiang },
+    { id: 71, name: "BS. Nguyễn Nhật Huy", specialization: "Tiêu hóa", phone: "0912.111.071", status: "Đang trực", img: nguyennhathuy },
+    { id: 72, name: "BS. Vũ Thu Huyền", specialization: "Tim mạch", phone: "0912.111.072", status: "Đang trực", img: vuthuhuyen },
+    { id: 73, name: "BS. Phan Bảo Khánh", specialization: "Tai Mũi Họng", phone: "0912.111.073", status: "Đang trực", img: phanbaokhanh },
+    { id: 74, name: "BS. Đặng Thụy Lâm", specialization: "Cột sống", phone: "0912.111.074", status: "Đang trực", img: dangthuylam },
+    { id: 75, name: "BS. Bùi Khánh Ly", specialization: "Y học Cổ truyền", phone: "0912.111.075", status: "Đang trực", img: buikhanhly },
+    { id: 76, name: "BS. Đỗ Hoàng Long", specialization: "Sản Phụ khoa", phone: "0912.111.076", status: "Đang trực", img: dohoanglong },
+    { id: 77, name: "BS. Ngô Thanh Nga", specialization: "Nhi khoa", phone: "0912.111.077", status: "Đang trực", img: ngothanhnga },
+    { id: 78, name: "BS. Lý Hồng Nhung", specialization: "Da liễu", phone: "0912.111.078", status: "Đang trực", img: lyhongnhung },
+    { id: 79, name: "BS. Dương Tuấn Phong", specialization: "Sức khỏe tâm thần", phone: "0912.111.079", status: "Đang trực", img: duongtuanphong },
+    { id: 80, name: "BS. Đào Minh Quân", specialization: "Hô hấp - Phổi", phone: "0912.111.080", status: "Đang trực", img: daominhquan },
+    { id: 81, name: "BS. Hà Kiều Anh", specialization: "Ngoại thần kinh", phone: "0912.111.081", status: "Đang trực", img: hakieuanh },
+    { id: 82, name: "BS. Chu Minh Sang", specialization: "Nam học", phone: "0912.111.082", status: "Đang trực", img: chuminhsang },
+    { id: 83, name: "BS. Đoàn Thu Thủy", specialization: "Chuyên khoa Mắt", phone: "0912.111.083", status: "Đang trực", img: doanthuthuy },
+    { id: 84, name: "BS. Lâm Bảo Tín", specialization: "Thận - Tiết niệu", phone: "0912.111.084", status: "Đang trực", img: lambaotin },
+    { id: 85, name: "BS. Trịnh Uyên Thư", specialization: "Nội khoa", phone: "0912.111.085", status: "Đang trực", img: trinhuyenthu },
+    { id: 86, name: "BS. Phùng Thế Vinh", specialization: "Nha khoa", phone: "0912.111.086", status: "Đang trực", img: phungthevinh },
+    { id: 87, name: "BS. Cao Thanh Xuân", specialization: "Tiểu đường - Nội tiết", phone: "0912.111.087", status: "Đang trực", img: caothanhxuan },
+    { id: 88, name: "BS. Đinh Trọng Hiếu", specialization: "Phục hồi chức năng", phone: "0912.111.088", status: "Đang trực", img: dinhtronghieu },
+    { id: 89, name: "BS. Kim Bảo Ngân", specialization: "Cộng hưởng từ", phone: "0912.111.089", status: "Đang trực", img: kimbaongan },
+    { id: 90, name: "BS. Quách Tuấn Kiệt", specialization: "Cắt lớp vi tính", phone: "0912.111.090", status: "Đang trực", img: quachtuankiet },
+    { id: 91, name: "BS. Lương Minh Triết", specialization: "Nội soi Tiêu hóa", phone: "0912.111.091", status: "Đang trực", img: luongminhtriet },
+    { id: 92, name: "BS. Nghiêm Thùy Chi", specialization: "Ung bướu", phone: "0912.111.092", status: "Đang trực", img: nghiemthuychi },
+    { id: 93, name: "BS. Tạ Anh Dũng", specialization: "Da liễu thẩm mỹ", phone: "0912.111.093", status: "Đang trực", img: taanhdung },
+    { id: 94, name: "BS. Vi Kim Liên", specialization: "Truyền nhiễm", phone: "0912.111.094", status: "Đang trực", img: vikimlien },
+    { id: 95, name: "BS. Diệp Bảo Ngọc", specialization: "Thẩm mỹ", phone: "0912.111.095", status: "Đang trực", img: diepbaongoc },
+    { id: 96, name: "BS. Kha Chấn Đông", specialization: "Trị liệu Tâm lý", phone: "0912.111.096", status: "Đang trực", img: khachandong },
+    { id: 97, name: "BS. Nông Thúy Hằng", specialization: "Vô sinh - Hiếm muộn", phone: "0912.111.097", status: "Đang trực", img: nongthuyhang },
+    { id: 98, name: "BS. Âu Minh Tuấn", specialization: "Nha khoa", phone: "0912.111.098", status: "Đang trực", img: auminhtuan },
+    { id: 99, name: "BS. Bế Thanh Huyền", specialization: "Nha khoa", phone: "0912.111.099", status: "Đang trực", img: bethanhhuyen },
+    { id: 100, name: "BS. Lục Bảo Nam", specialization: "Nha khoa", phone: "0912.111.100", status: "Đang trực", img: lucbaonam },
+    { id: 101, name: "ThS. BS. Nguyễn Hoài An", specialization: "Tâm lý từ xa", phone: "0912.111.101", status: "Đang trực", img: nguyenhoaian },
+    { id: 102, name: "Chuyên gia Lê Minh Tâm", specialization: "Tâm lý từ xa", phone: "0912.111.102", status: "Đang trực", img: leminhtam },
+    { id: 103, name: "BS. Trịnh Thúy Quỳnh", specialization: "Tâm lý từ xa", phone: "0912.111.103", status: "Đang trực", img: trinhthuyquynh },
+    { id: 104, name: "ThS. Đỗ Tuấn Kiệt", specialization: "Tâm lý từ xa", phone: "0912.111.104", status: "Đang trực", img: dotuankiet },
+    { id: 105, name: "PGS. TS. Trần Bảo Ngọc", specialization: "Tâm lý từ xa", phone: "0912.111.105", status: "Đang trực", img: tranbaongoc },
+    { id: 106, name: "BS. Vũ Hoàng Long", specialization: "Tâm lý từ xa", phone: "0912.111.106", status: "Đang trực", img: vuhoanglong },
+    { id: 107, name: "Chuyên gia Hà Anh Tuấn", specialization: "Tâm lý từ xa", phone: "0912.111.107", status: "Đang trực", img: haanhtuan },
+    { id: 108, name: "BS. Phan Thanh Thảo", specialization: "Tâm lý từ xa", phone: "0912.111.108", status: "Đang trực", img: phanthanhthao },
+    { id: 109, name: "BS. Nguyễn Minh Đức", specialization: "Da liễu từ xa", phone: "0912.111.109", status: "Đang trực", img: nguyenminhduc },
+    { id: 110, name: "ThS. BS. Lê Thu Trang", specialization: "Da liễu từ xa", phone: "0912.111.110", status: "Đang trực", img: lethutrang },
+    { id: 111, name: "BS. Hoàng Gia Bảo", specialization: "Da liễu từ xa", phone: "0912.111.111", status: "Đang trực", img: hoanggiabao },
+    { id: 112, name: "BS. Phạm Minh Anh", specialization: "Da liễu từ xa", phone: "0912.111.112", status: "Đang trực", img: phamminhanh },
+    { id: 113, name: "PGS. TS. Đặng Hữu Nam", specialization: "Cơ-Xương-Khớp từ xa", phone: "0912.111.113", status: "Đang trực", img: danghuunam },
+    { id: 114, name: "BS. Trần Văn Hùng", specialization: "Cơ-Xương-Khớp từ xa", phone: "0912.111.114", status: "Đang trực", img: tranvanhung },
+    { id: 115, name: "BS. Lý Thanh Hằng", specialization: "Cơ-Xương-Khớp từ xa", phone: "0912.111.115", status: "Đang trực", img: lythanhhang },
+    { id: 116, name: "ThS. BS. Ngô Quốc Việt", specialization: "Cơ-Xương-Khớp từ xa", phone: "0912.111.116", status: "Đang trực", img: ngoquocviet },
+    { id: 117, name: "BS. Bùi Minh Tuấn", specialization: "Tiêu hóa từ xa", phone: "0912.111.117", status: "Đang trực", img: buiminhtuan },
+    { id: 118, name: "BS. Đỗ Hồng Liên", specialization: "Tiêu hóa từ xa", phone: "0912.111.118", status: "Đang trực", img: dohonglien },
+    { id: 119, name: "TS. BS. Võ Văn Kiệt", specialization: "Tiêu hóa từ xa", phone: "0912.111.119", status: "Đang trực", img: vovankiet },
+    { id: 120, name: "BS. Nguyễn Thái Sơn", specialization: "Tim mạch từ xa", phone: "0912.111.120", status: "Đang trực", img: nguyenthaison },
+    { id: 121, name: "ThS. BS. Đào Mỹ Linh", specialization: "Tim mạch từ xa", phone: "0912.111.121", status: "Đ đang trực", img: daomylinh },
+    { id: 122, name: "BS. Trần Nhật Hoàng", specialization: "Tim mạch từ xa", phone: "0912.111.122", status: "Đang trực", img: trannhathoang },
+    { id: 123, name: "BS. Lê Quang Vinh", specialization: "Tai Mũi Họng từ xa", phone: "0912.111.123", status: "Đang trực", img: lequangvinh },
+    { id: 124, name: "BS. Nguyễn Thị Tâm", specialization: "Tai Mũi Họng từ xa", phone: "0912.111.124", status: "Đang trực", img: nguyenthitam },
+    { id: 125, name: "TS. BS. Phạm Gia Huy", specialization: "Tai Mũi Họng từ xa", phone: "0912.111.125", status: "Đang trực", img: phamgiahuy },
+    { id: 126, name: "BS. Đặng Thu Thủy", specialization: "Thần kinh từ xa", phone: "0912.111.126", status: "Đang trực", img: dangthuthuy },
+    { id: 127, name: "BS. Phan Văn Trị", specialization: "Thần kinh từ xa", phone: "0912.111.127", status: "Đang trực", img: phanvantri },
+    { id: 128, name: "PGS. TS. Lâm Thế Vinh", specialization: "Thần kinh từ xa", phone: "0912.111.128", status: "Đang trực", img: lamthevinh },
+    { id: 129, name: "Chuyên gia Hà Kim Chi", specialization: "Thần kinh từ xa", phone: "0912.111.129", status: "Đang trực", img: hakimchi },
+    { id: 130, name: "BS. Trương Minh Nhật", specialization: "Thần kinh từ xa", phone: "0912.111.130", status: "Đang trực", img: truongminhnhat },
   ];
 
-  // Logic LocalStorage
   const [doctors, setDoctors] = useState(() => {
     const savedDoctors = localStorage.getItem("doctors");
     return savedDoctors ? JSON.parse(savedDoctors) : initialDoctors;

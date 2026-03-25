@@ -9,11 +9,8 @@ const BookingCheckout = () => {
   const history = useHistory();
   const location = useLocation();
 
-  // 1. LẤY DỮ LIỆU TỪ ROUTE (Bác sĩ hoặc Gói khám)
-  const { selectedDoctor, selectedPackage, isPackage } = location.state || {};
+  const { selectedDoctor, selectedPackage, isPackage, selectedService } = location.state || {};
   const displayData = isPackage ? selectedPackage : selectedDoctor;
-
-  // 2. XỬ LÝ CHI PHÍ
   const currentFee = displayData?.fee || displayData?.fees || 0;
 
   const today = new Date().toISOString().split("T")[0];
@@ -37,11 +34,9 @@ const BookingCheckout = () => {
     "14:30 - 15:00", "15:00 - 15:30", "15:30 - 16:00", "16:00 - 16:30"
   ];
 
-  // CHECK LỊCH TRÙNG TỪ SERVER
   useEffect(() => {
     if (displayData?.name && bookingDate) {
       const encodedName = encodeURIComponent(displayData.name.trim());
-      // Lưu ý: Endpoint này phải trả về danh sách lịch đã đặt để khóa nút
       const url = `http://localhost:5000/appointments?doctorName=${encodedName}&date=${bookingDate}`;
 
       fetch(url)
@@ -58,73 +53,75 @@ const BookingCheckout = () => {
 
   const handleInputChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-//   const isTimePassed = (slot) => {
-//     // Luôn trả về false để không ca nào bị mờ (disable)
-//     return false; 
-// };
+  // CÁCH "MỞ KHÓA" TẤT CẢ ĐỂ NHẬP LIỆU THOẢI MÁI
+  const isTimePassed = (slot) => {
+    return false; // Cho phép chọn mọi khung giờ bất kể ngày giờ nào
+  };
 
-  // // Kiểm tra giờ đã trôi qua trong ngày hôm nay
-   const isTimePassed = (slot) => {
-     if (bookingDate !== today) return false;
-     const currentTime = new Date();
-     const [startTime] = slot.split(" - ");
-     const [hours, minutes] = startTime.split(":").map(Number);
-     const slotDateTime = new Date();
-     slotDateTime.setHours(hours, minutes, 0, 0);
-     return currentTime > slotDateTime;
-   };
+  // const isTimePassed = (slot) => {
+  //  if (bookingDate !== today) return false;
+  //  const currentTime = new Date();
+  //  const [startTime] = slot.split(" - ");
+  //  const [hours, minutes] = startTime.split(":").map(Number);
+  //  const slotDateTime = new Date();
+  //  slotDateTime.setHours(hours, minutes, 0, 0);
+  //  return currentTime > slotDateTime;
+  // };
 
-  // XỬ LÝ XÁC NHẬN ĐẶT LỊCH
   const handleConfirmBooking = () => {
-    // Lấy thông tin định danh từ LocalStorage
     const userEmail = localStorage.getItem("userEmail");
     const user = JSON.parse(localStorage.getItem("user") || "{}");
 
-    // Validation cơ bản
     if (!selectedTime || !formData.patientName || !formData.phone) { 
-      alert("Vui lòng nhập đầy đủ: Họ tên, Số điện thoại và Chọn khung giờ!"); 
-      return; 
+        alert("Vui lòng nhập đầy đủ: Họ tên, Số điện thoại và Chọn khung giờ!"); 
+        return; 
     }
 
     if (bookedSlots.includes(selectedTime)) {
-      alert("Khung giờ này vừa được người khác đặt!");
-      return;
+        alert("Khung giờ này vừa được người khác đặt!");
+        return;
     }
 
-    // ĐÓNG GÓI DỮ LIỆU GỬI LÊN MONGODB
+    // TẠO BIẾN DỊCH VỤ CHUẨN
+    const finalServiceName = selectedService || (isPackage ? selectedPackage?.name : "Khám tổng quát");
+
     const bookingData = {
-      ...formData,
-      bookedBy: userEmail || formData.email, // QUAN TRỌNG: Dùng cái này để lọc ở trang Trạng thái
-      patientId: user._id || user.id || "GUEST_ID", 
-      doctorId: displayData?.id || displayData?._id || "DOCTOR_ID",
-      doctorName: displayData?.name || "Bác sĩ",
-      fee: Number(currentFee), 
-      date: bookingDate,
-      slotTime: selectedTime,
-      status: "pending",
-      paymentStatus: "CHƯA THANH TOÁN",
-      type: isPackage ? "package" : "doctor",
-      createdAt: new Date().toISOString()
+        ...formData,
+        bookedBy: userEmail || formData.email,
+        patientId: user._id || user.id || "GUEST_ID", 
+        doctorId: displayData?.id || displayData?._id || "DOCTOR_ID",
+        doctorName: displayData?.name || "Bác sĩ",
+        
+        serviceName: finalServiceName,
+        selectedServices: [{ name: finalServiceName }], 
+
+        fee: Number(currentFee), 
+        date: bookingDate,
+        slotTime: selectedTime,
+        status: "pending",
+        paymentStatus: "CHƯA THANH TOÁN",
+        type: isPackage ? "package" : "doctor",
+        createdAt: new Date().toISOString()
     };
 
     fetch("http://localhost:5000/appointments/add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(bookingData)
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bookingData)
     })
     .then(async (res) => {
-      if (res.ok) {
-        alert("🎉 Đặt lịch thành công! Hệ thống đang chuyển hướng...");
-        history.push("/patient/appointment-status");
-      } else {
-        const errorData = await res.json();
-        alert("Lỗi: " + (errorData.message || "Không thể lưu lịch hẹn"));
-      }
+        if (res.ok) {
+            alert("🎉 Đặt lịch thành công!");
+            history.push("/patient/appointment-status");
+        } else {
+            const errorData = await res.json();
+            alert("Lỗi: " + errorData.message);
+        }
     })
-    .catch(err => alert("Không thể kết nối tới Backend! Vui lòng kiểm tra server."));
+    .catch(err => alert("Lỗi kết nối Server!"));
   };
 
-  if (!displayData) return <div className="p-5 text-center">Đang tải dữ liệu bác sĩ...</div>;
+  if (!displayData) return <div className="p-5 text-center">Đang tải dữ liệu...</div>;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", width: "100vw", overflow: "hidden", backgroundColor: "#f8fafc" }}>
@@ -147,7 +144,6 @@ const BookingCheckout = () => {
             <Row className="mx-0">
               <Col md="12">
                 <Card className="shadow-sm border-0 mb-4" style={{ borderRadius: "24px" }}>
-                  {/* Header Card: Thông tin bác sĩ/gói dịch vụ */}
                   <div className="p-4 d-flex align-items-center border-bottom bg-white" style={{ borderRadius: "24px 24px 0 0" }}>
                     <img src={displayData.img || "https://via.placeholder.com/100"} style={{ width: "80px", height: "80px", borderRadius: "50%", objectFit: "cover", border: "3px solid #fdbb2d" }} alt="dr" />
                     <div className="ml-4">
@@ -155,13 +151,13 @@ const BookingCheckout = () => {
                       <div className="mt-1">
                         <span className="text-muted mr-2">Phí dịch vụ:</span>
                         <b className="text-danger" style={{ fontSize: "20px" }}>{currentFee.toLocaleString('vi-VN')} VNĐ</b>
+                        <p className="text-primary m-0 font-weight-bold">Dịch vụ: {selectedService || (isPackage ? selectedPackage?.name : "Khám tổng quát")}</p>
                       </div>
                     </div>
                   </div>
 
                   <CardBody className="p-4">
                     <Row>
-                      {/* Cột 1: Chọn thời gian */}
                       <Col lg="5" className="border-right">
                         <h6 className="font-weight-bold mb-3"><i className="fa fa-calendar-alt text-primary mr-2"></i> 1. CHỌN NGÀY & GIỜ KHÁM</h6>
                         <FormGroup>
@@ -184,10 +180,8 @@ const BookingCheckout = () => {
                               );
                           })}
                         </div>
-                        {selectedTime && <div className="mt-3 text-success font-weight-bold"><i className="fa fa-check-circle mr-1"></i> Đã chọn: {selectedTime}</div>}
                       </Col>
 
-                      {/* Cột 2: Form thông tin */}
                       <Col lg="7" className="pl-lg-4 mt-4 mt-lg-0">
                         <h6 className="font-weight-bold mb-3"><i className="fa fa-edit text-primary mr-2"></i> 2. THÔNG TIN BỆNH NHÂN</h6>
                         <Row>

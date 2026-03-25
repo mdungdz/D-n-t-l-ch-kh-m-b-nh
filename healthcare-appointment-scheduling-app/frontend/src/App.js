@@ -18,7 +18,7 @@ import AppointmentStatus from "./Patient/AppointmentStatus";
 import Payment from "./Patient/Payment"; 
 import { AuthContext } from "./Auth/AuthContext";
 import AdminDashboard from "./Pages/AdminDashboard"; 
-import TodaysSchedule from "./Doctor/TodaysSchedule";
+
 import MedicalServices from "./Patient/MedicalServices";
 import BookingCheckout from "./Patient/BookingCheckout";
 import SearchPackage from "./Patient/SearchPackage";

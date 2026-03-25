@@ -50,6 +50,7 @@ const PatientAppointments = () => {
   useEffect(() => {
     fetchAppointments(); // Gọi dữ liệu từ DB khi load trang
     generateWeek(new Date());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const changeWeek = (direction) => {
